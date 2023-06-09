@@ -1,12 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Router from "./src/components/router";
+import {createContext, useState} from "react";
 
+export const contextInitialObject = {
+  token: "",
+  user:"",
+  userId: ""
+}
+export const Context = createContext(null)
 export default function App() {
+  const [context, setContext] = useState(contextInitialObject)
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Context.Provider value={ [context, setContext] }>
+        <Router />
+      </Context.Provider>
+
   );
 }
 
