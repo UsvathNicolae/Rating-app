@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Input from '../../components/customInput'
 import {colors, ROUTES} from "../../constants";
-import {login} from "../../services/loginService";
+import {login, loginService} from "../../services/loginService";
 import {Context} from "../../../App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -24,7 +24,9 @@ const Login = ({navigation}) => {
             isValid = false;
         }
         if (isValid) {
-            await login(credentials)
+            signInValid();
+            /*
+            await loginService(credentials)
                 .then(async (response) => {
                     console.log(response)
                     if(response){
@@ -41,8 +43,7 @@ const Login = ({navigation}) => {
                         throw new Error("Authentication failed")
                     }})
                 .catch((err) => console.error(err))
-
-
+                */
         }
     };
 
@@ -50,7 +51,7 @@ const Login = ({navigation}) => {
         navigation.navigate(ROUTES.REGISTER)
     }
     const signInValid = () =>{
-        navigation.navigate('Register')
+        navigation.navigate('Home')
     }
     const handleOnchange = (text, input) => {
         setCredentials(prevState => ({...prevState, [input]: text}));
@@ -66,7 +67,7 @@ const Login = ({navigation}) => {
                 paddingTop: 50,
                 paddingHorizontal: 20
             }}>
-                <Text>Sign in</Text>
+                <Text style={ styles.title }>Sign in</Text>
                 <View style={{marginVertical: 20}}>
                     <Input
                         onChangeText={text => handleOnchange(text, 'email')}
@@ -94,7 +95,7 @@ const Login = ({navigation}) => {
                         textAlign: 'center',
                         fontSize: 16,
                     }}>
-                    Don't have account ?Register
+                    Don't have account? Register now!
                 </Text>
                 </View>
 
@@ -112,4 +113,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 30,
+        color: colors.black,
+        marginLeft: 10,
+        alignSelf: "center",
+    }
 });

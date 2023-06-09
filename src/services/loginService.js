@@ -1,5 +1,5 @@
 import { post } from "./index";
 
-export const login = async (data) => {
+export const loginService = async (data) => {
     return await post('/user/login', data)
 }
