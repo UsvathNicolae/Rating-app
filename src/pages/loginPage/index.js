@@ -2,11 +2,12 @@ import React, {useContext} from 'react'
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Input from '../../components/customInput'
 import {colors, ROUTES} from "../../constants";
-import {login, loginService} from "../../services/loginService";
+import { loginService} from "../../services/loginService";
 import {Context} from "../../../App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
+
     const [ , setContext]= useContext(Context)
     const [credentials, setCredentials] = React.useState({email: '', password: ''});
     const [errors, setErrors] = React.useState({});
@@ -24,26 +25,29 @@ const Login = ({navigation}) => {
             isValid = false;
         }
         if (isValid) {
-            signInValid();
-            /*
             await loginService(credentials)
                 .then(async (response) => {
-                    console.log(response)
                     if(response){
+                        handleError('', "incorrectCredentials")
                         setContext({
                             token: response.token ?? '',
                             user: response.user ?? '',
-                            userId: response.userId ?? ''
+                            email: response.email ?? '',
+                            firstName: response.firstName ?? '',
+                            lastName: response.lastName ?? '',
+                            licencePlate: response.licencePlate ?? ''
                         })
 
-                        await AsyncStorage.setItem('token', response.token ?? '')
-                        setCredentials({email: '', password: ''})
-                        signInValid();
+                        //await AsyncStorage.setItem('token', response.token ?? '')
+                        signInValid()
                     }else {
                         throw new Error("Authentication failed")
                     }})
-                .catch((err) => console.error(err))
-                */
+                .catch((err) => {
+                    handleError('Incorrect email or password', 'incorrectCredentials')
+                    //console.error(err.message)
+                })
+
         }
     };
 
@@ -51,7 +55,7 @@ const Login = ({navigation}) => {
         navigation.navigate(ROUTES.REGISTER)
     }
     const signInValid = () =>{
-        navigation.navigate('Home')
+        navigation.navigate(ROUTES.HOME)
     }
     const handleOnchange = (text, input) => {
         setCredentials(prevState => ({...prevState, [input]: text}));
@@ -85,18 +89,23 @@ const Login = ({navigation}) => {
                     placeholder="Enter your password"
                     error={errors.password}
                     password
-                />
-                <Button title="Log In" onPress={validate} />
-                <Text
-                    onPress={onRegisterPressed}
-                    style={{
-                        color: colors.black,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        fontSize: 16,
-                    }}>
-                    Don't have account? Register now!
-                </Text>
+                    />
+                    {errors.incorrectCredentials && (
+                        <Text
+                            style={{color: colors.red, fontSize: 15, textAlign: 'center'}}
+                        >{ errors.incorrectCredentials }</Text>
+                    )}
+                    <Button title="Log In" onPress={validate} />
+                    <Text
+                        onPress={onRegisterPressed}
+                        style={{
+                            color: colors.black,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            fontSize: 16,
+                        }}>
+                        Don't have account? Register now!
+                    </Text>
                 </View>
 
             </ScrollView>

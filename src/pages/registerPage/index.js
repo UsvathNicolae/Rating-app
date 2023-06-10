@@ -1,13 +1,11 @@
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from "react";
-import {Context} from "../../../App";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {colors, ROUTES} from "../../constants";
 import Input from "../../components/customInput";
 import {registerService} from "../../services/registerService";
 
 const Register = ({navigation}) => {
-    const [ , setContext]= useContext(Context)
+
     const [credentials, setCredentials] = React.useState({email: '', username: '', firstName: '', lastName: '', password: '', confirmedPassword: ''});
     const [errors, setErrors] = React.useState({});
 
@@ -40,20 +38,16 @@ const Register = ({navigation}) => {
             isValid = false;
         }
         if (isValid) {
-            onLoginPressed();
-            /*
             await registerService(credentials)
-                .then(navigation.navigate(ROUTES.LOGIN, { name: ROUTES.LOGIN }))
-                .catch((err) => console.error(err))
-            */
+                .then(onLoginPressed)
+                .catch((err) => {
+                    handleError('Email already exists', 'email');
+                })
         }
     };
 
     const onLoginPressed = () =>{
         navigation.navigate(ROUTES.LOGIN)
-    }
-    const signInValid = () =>{
-        navigation.navigate('Register')
     }
     const handleOnchange = (text, input) => {
         setCredentials(prevState => ({...prevState, [input]: text}));
