@@ -2,7 +2,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080'
+    baseURL: 'http://192.168.100.3:8080'
 })
 
 axiosInstance.interceptors.request.use(async (req) => {
@@ -14,8 +14,8 @@ axiosInstance.interceptors.request.use(async (req) => {
     return req;
 })
 
-export const get = async(url, filters = {}, config = {}) => {
-    const response = await axiosInstance.get(url, { params: filters, ...config })
+export const get = async(url) => {
+    const response = await axiosInstance.get(url)
     return response.data
 }
 

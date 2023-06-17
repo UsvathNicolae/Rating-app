@@ -14,7 +14,9 @@ const Input = ({
     const [isFocused, setIsFocused] = React.useState(false);
     return (
         <View style={{marginBottom: 15}}>
-            <Text style={style.label}>{label}</Text>
+            {label&&
+                <Text style={style.label}>{label}</Text>
+            }
             <View
                 style={[
                     style.inputContainer,
@@ -27,10 +29,13 @@ const Input = ({
                         alignItems: 'center',
                     },
                 ]}>
-                <Icon
-                    name={iconName}
-                    style={style.icon}
-                />
+                {iconName &&
+                    <Icon
+                        name={iconName}
+                        style={style.icon}
+                    />
+                }
+
                 <TextInput
                     autoCorrect={false}
                     onFocus={() => {
@@ -39,14 +44,14 @@ const Input = ({
                     }}
                     onBlur={() => setIsFocused(false)}
                     secureTextEntry={hidePassword}
-                    style={{color: colors.darkBlue, flex: 1}}
+                    style={{color: colors.darkBlue}}
                     {...props}
                 />
                 {password && (
                     <Icon
                         onPress={() => setHidePassword(!hidePassword)}
                         name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-                        style={{color: colors.darkBlue, fontSize: 22}}
+                        style={{color: colors.darkBlue, fontSize: 22, position: 'absolute', right: 20}}
                     />
                 )}
             </View>

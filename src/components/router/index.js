@@ -5,6 +5,7 @@ import {ROUTES} from "../../constants";
 import Login from "../../pages/loginPage";
 import Register from "../../pages/registerPage";
 import Home from "../../pages/homePage";
+import Profile from "../../pages/ProfilePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const Router = () => {
                 <Stack.Screen component={Login} name={ROUTES.LOGIN}/>
                 <Stack.Screen component={Register} name={ROUTES.REGISTER}/>
                 <Stack.Screen component={Home} name={ROUTES.HOME}/>
+                <Stack.Screen component={Profile} name={ROUTES.PROFILE}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

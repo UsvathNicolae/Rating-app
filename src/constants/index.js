@@ -11,5 +11,6 @@ export const colors = {
 export const ROUTES = {
     LOGIN: 'Login',
     REGISTER: 'Register',
-    HOME: 'Home'
+    HOME: 'Home',
+    PROFILE: 'Profile'
 }

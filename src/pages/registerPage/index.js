@@ -2,7 +2,7 @@ import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from
 import React, {useContext} from "react";
 import {colors, ROUTES} from "../../constants";
 import Input from "../../components/customInput";
-import {registerService} from "../../services/registerService";
+import {registerService} from "../../services/userServices";
 
 const Register = ({navigation}) => {
 
@@ -41,7 +41,7 @@ const Register = ({navigation}) => {
             await registerService(credentials)
                 .then(onLoginPressed)
                 .catch((err) => {
-                    handleError('Email already exists', 'email');
+                    handleError('Email is already in use!', 'email');
                 })
         }
     };

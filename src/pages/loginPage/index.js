@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Input from '../../components/customInput'
 import {colors, ROUTES} from "../../constants";
-import { loginService} from "../../services/loginService";
+import { loginService} from "../../services/userServices";
 import {Context} from "../../../App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,7 +15,6 @@ const Login = ({navigation}) => {
     const validate = async () => {
         Keyboard.dismiss();
         let isValid = true;
-        console.log(credentials)
         if (!credentials.email) {
             handleError('Please input email', 'email');
             isValid = false;
@@ -28,9 +27,10 @@ const Login = ({navigation}) => {
             await loginService(credentials)
                 .then(async (response) => {
                     if(response){
+                        console.log(response)
                         handleError('', "incorrectCredentials")
                         setContext({
-                            token: response.token ?? '',
+                            userID: response.userID ?? '',
                             user: response.user ?? '',
                             email: response.email ?? '',
                             firstName: response.firstName ?? '',
@@ -38,7 +38,7 @@ const Login = ({navigation}) => {
                             licencePlate: response.licencePlate ?? ''
                         })
 
-                        //await AsyncStorage.setItem('token', response.token ?? '')
+                        await AsyncStorage.setItem('token', response.token ?? '')
                         signInValid()
                     }else {
                         throw new Error("Authentication failed")
