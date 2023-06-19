@@ -4,7 +4,8 @@ export const colors = {
     white : '#FFFFFF',
     black : '#000000',
     darkBlue : '#224957',
-    red: 'red'
+    red: 'red',
+    yellow:'yellow'
 }
 
 
@@ -12,5 +13,6 @@ export const ROUTES = {
     LOGIN: 'Login',
     REGISTER: 'Register',
     HOME: 'Home',
-    PROFILE: 'Profile'
+    PROFILE: 'Profile',
+    ADD_RATING:'AddRating'
 }
