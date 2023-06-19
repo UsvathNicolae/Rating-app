@@ -3,7 +3,6 @@ import { CheckBox } from '@rneui/themed';
 import {colors} from "../../constants";
 import React, {useContext, useEffect, useState} from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import CustomInput from "../../components/customInput";
 import {Context} from "../../../App";
 import Input from "../../components/customInput";
 import {createRatingService} from "../../services/ratingServices";
@@ -82,12 +81,14 @@ const AddRating = ({navigation}) => {
                 onChangeText={text => handleOnchange(text, 'licencePlate')}
                 label="Licence Plate"
                 placeholder="Enter the licence plate"
+                onFocus={() => handleError(null, 'licencePlate')}
                 error={errors.licencePlate}
             />
             <Input
                 onChangeText={text => handleOnchange(text, 'description')}
                 label="Description"
                 placeholder="Enter a description"
+                onFocus={() => handleError(null, 'description')}
                 error={errors.description}
             />
             <View style={styles.checkboxContainer}>
