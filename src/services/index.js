@@ -14,8 +14,8 @@ axiosInstance.interceptors.request.use(async (req) => {
     return req;
 })
 
-export const get = async(url) => {
-    const response = await axiosInstance.get(url)
+export const get = async(url, filters = {}, config = {}) => {
+    const response = await axiosInstance.get(url,{ params: filters, ...config })
     return response.data
 }
 

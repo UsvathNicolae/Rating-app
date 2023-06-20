@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {Button, Keyboard, StyleSheet, Text, View} from 'react-native';
-import {colors} from "../../constants";
+import {componentsColors} from "../../constants";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React, {useContext, useEffect, useState} from "react";
 import {Context} from "../../../App";
@@ -14,7 +14,7 @@ const Profile = () => {
     const [errors, setErrors] = React.useState({});
 
     useEffect(()=>{
-        console.log("edit mode")
+
     }, [editMode])
     const handleOnchange = (text, input) => {
         setCredentials(prevState => ({...prevState, [input]: text}));
@@ -36,12 +36,9 @@ const Profile = () => {
             isValid = false;
         }
         if (isValid) {
-            console.log(context)
-
             await updateUserService(context.userID, credentials)
                 .then(async (response) => {
                     if (response) {
-                        console.log(response)
                         setContext({
                             userID: context.userID ?? '',
                             user: credentials.username ?? '',
@@ -144,18 +141,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     userIcon: {
-        color: colors.darkBlue,
+        color: componentsColors.iconPrimary,
         fontSize: 35,
         marginRight: 10,
     },
     editIcon: {
-        color: colors.darkBlue,
+        color: componentsColors.iconPrimary,
         fontSize: 20,
         marginRight: 10,
     },
     username:{
         fontSize: 22,
-        color: colors.darkBlue,
+        color: componentsColors.textPrimary,
 
     }
 });

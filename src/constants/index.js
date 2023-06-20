@@ -5,7 +5,30 @@ export const colors = {
     black : '#000000',
     darkBlue : '#224957',
     red: 'red',
-    yellow:'yellow'
+    yellow:'yellow',
+    gray:'#CFCFCF',
+    darkerBlue:'#050050',
+    darkGreen:'#006819',
+    blue:'#0B58D8',
+    navy:'#000080',
+    aqua:'#31A9FF',
+}
+
+export const componentsColors = {
+    ratingBackgroundColor:colors.gray,
+    starColor:colors.yellow,
+    textPrimary:colors.white,
+    textSecondary:colors.blue,
+    iconPrimary:colors.light,
+    iconSecondary:colors.black,
+    error:colors.red,
+    inputLabel:colors.grey,
+    inputContainer:colors.light,
+    inputBackground:colors.aqua,
+    titles:colors.blue,
+    labels:colors.blue,
+    backgroundColor:colors.white
+
 }
 
 

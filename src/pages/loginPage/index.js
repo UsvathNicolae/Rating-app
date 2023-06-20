@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Input from '../../components/customInput'
-import {colors, ROUTES} from "../../constants";
+import { componentsColors, ROUTES} from "../../constants";
 import { loginService} from "../../services/userServices";
 import {Context} from "../../../App";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,7 +27,6 @@ const Login = ({navigation}) => {
             await loginService(credentials)
                 .then(async (response) => {
                     if(response){
-                        console.log(response)
                         handleError('', "incorrectCredentials")
                         setContext({
                             userID: response.userID ?? '',
@@ -65,7 +64,7 @@ const Login = ({navigation}) => {
     };
 
     return (
-        <SafeAreaView style={{backgroundColor: colors.white, flex: 1}}>
+        <SafeAreaView style={{backgroundColor: componentsColors.backgroundColor, flex: 1}}>
             <ScrollView contentContainerStyle={
             {
                 paddingTop: 50,
@@ -79,6 +78,7 @@ const Login = ({navigation}) => {
                         iconName="email-outline"
                         label="Email"
                         placeholder="Enter your email address"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.email}
                     />
                     <Input
@@ -87,6 +87,7 @@ const Login = ({navigation}) => {
                     iconName="lock-outline"
                     label="Password"
                     placeholder="Enter your password"
+                    placeholderTextColor={componentsColors.textPrimary}
                     error={errors.password}
                     password
                     />
@@ -99,7 +100,7 @@ const Login = ({navigation}) => {
                     <Text
                         onPress={onRegisterPressed}
                         style={{
-                            color: colors.black,
+                            color: componentsColors.textSecondary,
                             fontWeight: 'bold',
                             textAlign: 'center',
                             fontSize: 16,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 30,
-        color: colors.black,
+        color: componentsColors.titles,
         marginLeft: 10,
         alignSelf: "center",
     }

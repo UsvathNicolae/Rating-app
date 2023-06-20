@@ -1,49 +1,57 @@
-import React from "react";
-import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from "react";
+import {Button, Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {colors, ROUTES} from "../../constants";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {Context} from "../../../App";
 import {useContext, useState} from "react";
 import Rating from "../../components/rating";
+import {getRatings} from "../../services/ratingServices";
 
 const Home = ({navigation}) => {
 
     const [ context, setContext]= useContext(Context)
 
-    //const [ratings, setRatings] = useState([])
+    const [isSearching, setIsSearching] = useState(false)
+    const [searchText, setSearchText] = useState('')
+    const [searchPressed, setSearchPressed] = useState(false)
+    const [ratings, setRatings] = useState([])
+    const [ratingError, setRatingError] = useState(null)
 
-    const ratings = [
-        {
-            description: 'description1',
-            username:'user1',
-            id:1,
-            img:'',
-            anonymous:false,
-            licencePlate:'TM 94 LIS',
-            stars:2,
-            date:'18-06-2023',
-        },
-        {
-            description: 'description2',
-            username:'user2',
-            id:2,
-            img:'',
-            anonymous:true,
-            licencePlate:'TM 13 DRW',
-            stars:3,
-            date:'18-06-2023',
-        },
-        {
-            description: 'description3',
-            username:'user1',
-            id:3,
-            img:'',
-            anonymous:false,
-            licencePlate:'TM 94 LIS',
-            stars:5,
-            date:'18-06-2023',
-        },
-    ];
+
+    useEffect(() => {
+        fetchRatings()
+
+    },[searchPressed])
+
+    const fetchRatings = async () => {
+        if (searchText) {
+            await getRatings( {licencePlate: searchText})
+                .then(async (response) => {
+                    if (response) {
+                        setRatings(response)
+                    } else {
+                        throw new Error("Failed to fetch ratings")
+                    }
+                })
+                .catch((err) => {
+                    setRatingError(err.message)
+                })
+        } else {
+            await getRatings()
+                .then(async (response) => {
+                    if (response) {
+                        setRatings(response)
+                    } else {
+                        throw new Error("Failed to fetch ratings")
+                    }
+                })
+                .catch((err) => {
+                    setRatingError(err.message)
+                })
+        }
+    }
+
+
     const onProfilePressed = () =>{
         navigation.navigate(ROUTES.PROFILE)
     }
@@ -51,36 +59,58 @@ const Home = ({navigation}) => {
         navigation.navigate(ROUTES.ADD_RATING)
     }
 
-    const search = () =>{}
+    const handleOnchange = (text) => {
+        setSearchText(text);
+    };
+    const search = () =>{
+        setIsSearching(!isSearching)
+        if(isSearching){
+            setSearchPressed(!searchPressed)
+        }
+    }
+
+    const windowHeight = Dimensions.get('window').height;
+
 
     return (
 
-        <View style={styles.container}>
+        <View style={ styles.container }>
             <View style={
                 {
-                    height:50,
-                    alignSelf:'stretch',
-                    margin:10,
-                    marginTop:20,
-                    flexDirection:'row',
-                    justifyContent:'space-between'
+                    height: 50,
+                    alignSelf: 'stretch',
+                    margin: 10,
+                    marginTop: 45,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
                 }
             }>
-                <View style={{flexDirection:'row'}}>
-                    <Icon name = 'account-box-outline' style={ styles.userIcon } onPress={onProfilePressed}></Icon>
-                    <Text style={ styles.username } onPress={onProfilePressed}>{ context.user } </Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Icon name='account-box-outline' style={styles.userIcon} onPress={onProfilePressed}></Icon>
+                    <Text style={styles.username} onPress={onProfilePressed}>{context.user} </Text>
                 </View>
-                <View style={{flexDirection:'row'}}>
-                    <Icon name = 'magnify' style={ styles.userIcon } onPress={search}/>
-                    <Button title='+ Create' onPress={ addRating }></Button>
+                <View style={{flexDirection: 'row'}}>
+                    {
+                        isSearching &&
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Search..."
+                            value={searchText}
+                            onChangeText={text => handleOnchange(text)}
+                        />
+                    }
+                    <Icon name='magnify' style={styles.userIcon} onPress={search}/>
+                    <TouchableOpacity style={styles.button} onPress={addRating}>
+                        <Text style={styles.buttonText}>+ Create</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
-            <ScrollView contentContainerStyle={ styles.scrollView }>
+            <ScrollView style={styles.scrollView}>
                 {
                     ratings.map((rating, key) =>
                         <Rating
-                            key = {rating.id}
+                            key={rating.id}
                             description={rating.description}
                             user={rating.username}
                             img={rating.img}
@@ -89,11 +119,11 @@ const Home = ({navigation}) => {
                             stars={rating.stars}
                             date={rating.date}
                         />
-
                     )
                 }
             </ScrollView>
         </View>
+
     );
 }
 
@@ -119,13 +149,29 @@ const styles = StyleSheet.create({
     scrollView:{
         //flex:1,
         //alignItems:'center',
-
-        //width:'100%',
+        width:'90%',
+        paddingHorizontal:10,
         //justifyContent:'center',
         //alignSelf:'stretch',
-        backgroundColor:'grey',
         marginRight:15,
         marginLeft:15,
         marginTop:15
-    }
+    },
+    searchInput: {
+        borderWidth: 1,
+        borderColor: '#888',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+    },
+    button: {
+        backgroundColor: 'blue',
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 14,
+    },
 });

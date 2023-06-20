@@ -1,6 +1,6 @@
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useContext} from "react";
-import {colors, ROUTES} from "../../constants";
+import {componentsColors, ROUTES} from "../../constants";
 import Input from "../../components/customInput";
 import {registerService} from "../../services/userServices";
 
@@ -57,7 +57,7 @@ const Register = ({navigation}) => {
     };
 
     return (
-        <SafeAreaView style={{backgroundColor: colors.white, flex: 1}}>
+        <SafeAreaView style={{backgroundColor: componentsColors.backgroundColor, flex: 1}}>
             <ScrollView contentContainerStyle={
                 {
                     paddingTop: 20,
@@ -119,7 +119,7 @@ const Register = ({navigation}) => {
                     <Text
                         onPress={onLoginPressed}
                         style={{
-                            color: colors.black,
+                            color: componentsColors.textSecondary,
                             fontWeight: 'bold',
                             textAlign: 'center',
                             fontSize: 16,
@@ -143,9 +143,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
+        marginTop:15,
         fontWeight: 'bold',
         fontSize: 30,
-        color: colors.black,
+        color: componentsColors.titles,
         marginLeft: 10,
         alignSelf: "center",
     }
