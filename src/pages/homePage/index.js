@@ -75,7 +75,9 @@ const Home = ({navigation}) => {
     return (
 
         <View style={ styles.container }>
-            <View style={
+            {
+                !context.guestMode &&
+                <View style={
                 {
                     height: 50,
                     alignSelf: 'stretch',
@@ -105,6 +107,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            }
 
             <ScrollView style={styles.scrollView}>
                 {

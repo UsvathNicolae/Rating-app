@@ -21,6 +21,7 @@ export const componentsColors = {
     textSecondary:colors.blue,
     iconPrimary:colors.light,
     iconSecondary:colors.black,
+    iconThird:colors.blue,
     error:colors.red,
     inputLabel:colors.grey,
     inputContainer:colors.light,

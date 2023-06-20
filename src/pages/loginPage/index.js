@@ -34,7 +34,8 @@ const Login = ({navigation}) => {
                             email: response.email ?? '',
                             firstName: response.firstName ?? '',
                             lastName: response.lastName ?? '',
-                            licencePlate: response.licencePlate ?? ''
+                            licencePlate: response.licencePlate ?? '',
+                            guestMode:false
                         })
 
                         await AsyncStorage.setItem('token', response.token ?? '')
@@ -63,10 +64,35 @@ const Login = ({navigation}) => {
         setErrors(prevState => ({...prevState, [input]: error}));
     };
 
+    const enterAsGuest = async () =>{
+        setCredentials({email: 'Guest', password: 'Guest'})
+        console.log(credentials)
+        await loginService(credentials)
+            .then(async (response) => {
+                if(response){
+                    handleError('', "incorrectCredentials")
+                    setContext({
+                        user: response.user ?? '',
+                        guestMode:true
+                    })
+
+                    await AsyncStorage.setItem('token', response.token ?? '')
+                    setCredentials({email: '', password: ''})
+                    signInValid()
+                }else {
+                    throw new Error("Authentication failed")
+                }})
+            .catch((err) => {
+                handleError('Incorrect email or password', 'incorrectCredentials')
+                //console.error(err.message)
+            })
+    }
+
     return (
         <SafeAreaView style={{backgroundColor: componentsColors.backgroundColor, flex: 1}}>
             <ScrollView contentContainerStyle={
             {
+                marginTop:120,
                 paddingTop: 50,
                 paddingHorizontal: 20
             }}>
@@ -93,19 +119,32 @@ const Login = ({navigation}) => {
                     />
                     {errors.incorrectCredentials && (
                         <Text
-                            style={{color: colors.red, fontSize: 15, textAlign: 'center'}}
+                            style={{color: componentsColors.error, fontSize: 15, textAlign: 'center'}}
                         >{ errors.incorrectCredentials }</Text>
                     )}
                     <Button title="Log In" onPress={validate} />
                     <Text
                         onPress={onRegisterPressed}
                         style={{
+                            marginTop:20,
                             color: componentsColors.textSecondary,
                             fontWeight: 'bold',
                             textAlign: 'center',
                             fontSize: 16,
                         }}>
                         Don't have account? Register now!
+                    </Text>
+
+                    <Text
+                        onPress={ enterAsGuest }
+                        style={{
+                            marginTop:30,
+                            color: componentsColors.textSecondary,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            fontSize: 16,
+                        }}>
+                        Check out the app as Guest!
                     </Text>
                 </View>
 
@@ -119,11 +158,12 @@ export default Login
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: componentsColors.backgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
     },
     title: {
+        marginBottom:30,
         fontWeight: 'bold',
         fontSize: 30,
         color: componentsColors.titles,

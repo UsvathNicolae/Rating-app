@@ -73,11 +73,11 @@ const Profile = () => {
             </View>
             <View style={{ flex:2, flexDirection:'row'}}>
                 <View style={{flex:1, flexDirection:'column', justifyContent:'space-around', alignItems:'center'}}>
-                    <Text>Username</Text>
-                    <Text>Email</Text>
-                    <Text>First name</Text>
-                    <Text>Last Name</Text>
-                    <Text>LicencePlate</Text>
+                    <Text style={ styles.text }>Username</Text>
+                    <Text style={ styles.text }>Email</Text>
+                    <Text style={ styles.text }>First name</Text>
+                    <Text style={ styles.text }>Last Name</Text>
+                    <Text style={ styles.text }>LicencePlate</Text>
                 </View>
                 <View style={{ width: 1, backgroundColor: 'black'}} />
                 {editMode?
@@ -115,11 +115,11 @@ const Profile = () => {
 
                     </View>:
                     <View style={{flex: 1, flexDirection:'column', justifyContent:'space-around', alignItems:'center'}}>
-                        <Text>{context.user}</Text>
-                        <Text>{context.email}</Text>
-                        <Text>{context.firstName}</Text>
-                        <Text>{context.lastName}</Text>
-                        <Text>{context.licencePlate}</Text>
+                        <Text style={ styles.text }>{context.user}</Text>
+                        <Text style={ styles.text }>{context.email}</Text>
+                        <Text style={ styles.text }>{context.firstName}</Text>
+                        <Text style={ styles.text }>{context.lastName}</Text>
+                        <Text style={ styles.text }>{context.licencePlate}</Text>
 
                     </View>
                 }
@@ -141,18 +141,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     userIcon: {
-        color: componentsColors.iconPrimary,
+        color: componentsColors.iconThird,
         fontSize: 35,
         marginRight: 10,
     },
     editIcon: {
-        color: componentsColors.iconPrimary,
+        color: componentsColors.iconSecondary,
         fontSize: 20,
         marginRight: 10,
     },
     username:{
         fontSize: 22,
-        color: componentsColors.textPrimary,
+        color: componentsColors.textSecondary,
+
+    },
+    text:{
+        color: componentsColors.textSecondary,
 
     }
 });
