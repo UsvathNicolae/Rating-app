@@ -1,9 +1,9 @@
 # Rating-app
 
-#Technologies: 
+# Technologies: 
 React Native + expo
 
-#Running the app:
+# Running the app:
 Run npm install in the root directory
 
 Install Expo Go app on your smartphone
