@@ -15,7 +15,8 @@ export const colors = {
 }
 
 export const componentsColors = {
-    ratingBackgroundColor:colors.gray,
+    ratingBackgroundGray:colors.gray,
+    ratingBackgroundBlue:colors.aqua,
     starColor:colors.yellow,
     textPrimary:colors.white,
     textSecondary:colors.blue,

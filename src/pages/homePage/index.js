@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {Context} from "../../../App";
 import {useContext, useState} from "react";
 import Rating from "../../components/rating";
-import {getRatings} from "../../services/ratingServices";
+import {getRatingsService, setSeenRatingsService} from "../../services/ratingServices";
 
 const Home = ({navigation}) => {
 
@@ -20,15 +20,18 @@ const Home = ({navigation}) => {
 
     useEffect(() => {
         fetchRatings()
+            .then(() => {})
+
 
     },[searchPressed])
 
     const fetchRatings = async () => {
         if (searchText) {
-            await getRatings( {licencePlate: searchText})
+            await getRatingsService( {licencePlate: searchText})
                 .then(async (response) => {
                     if (response) {
                         setRatings(response)
+                        await setSeenRatingsService({userId: context.userID})
                     } else {
                         throw new Error("Failed to fetch ratings")
                     }
@@ -37,10 +40,13 @@ const Home = ({navigation}) => {
                     setRatingError(err.message)
                 })
         } else {
-            await getRatings()
+            await getRatingsService()
                 .then(async (response) => {
                     if (response) {
                         setRatings(response)
+                        await setSeenRatingsService({ userId: context.userID})
+                            .then((res)=>{
+                                console.log(res)})
                     } else {
                         throw new Error("Failed to fetch ratings")
                     }
@@ -68,8 +74,6 @@ const Home = ({navigation}) => {
             setSearchPressed(!searchPressed)
         }
     }
-
-    const windowHeight = Dimensions.get('window').height;
 
 
     return (
@@ -114,13 +118,16 @@ const Home = ({navigation}) => {
                     ratings.map((rating, key) =>
                         <Rating
                             key={rating.id}
+                            id={rating.id}
                             description={rating.description}
                             user={rating.username}
                             img={rating.img}
                             anonymous={rating.anonymous}
                             licencePlate={rating.licencePlate}
                             stars={rating.stars}
-                            date={rating.date}
+                            datePosted={rating.createdAt}
+                            liked={rating.likedBy}
+                            seen={rating.seenBy}
                         />
                     )
                 }
