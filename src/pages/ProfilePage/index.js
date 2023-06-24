@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {Button, Keyboard, StyleSheet, Text, View} from 'react-native';
+import {Button, Keyboard, StyleSheet, Text, TextInput, View} from 'react-native';
 import {componentsColors} from "../../constants";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React, {useContext, useEffect, useState} from "react";
@@ -29,11 +29,20 @@ const Profile = () => {
     const validate = async () =>{
         Keyboard.dismiss();
         let isValid = true;
-        console.log(credentials)
         if (!credentials.email) {
-
-            handleError('Please input email', 'email');
-            isValid = false;
+            credentials.email = context.email
+        }
+        if (!credentials.username) {
+            credentials.username = context.user
+        }
+        if (!credentials.firstName) {
+            credentials.firstName = context.firstName
+        }
+        if (!credentials.lastName) {
+            credentials.lastName = context.lastName
+        }
+        if (!credentials.licencePlate) {
+            credentials.licencePlate = context.licencePlate
         }
         if (isValid) {
             await updateUserService(context.userID, credentials)
@@ -47,7 +56,6 @@ const Profile = () => {
                             lastName: credentials.lastName ?? '',
                             licencePlate: credentials.licencePlate ?? ''
                         })
-                        console.log(context)
                         enterEditMode()
                     }else{
                         throw new Error("Update failed")
@@ -82,34 +90,39 @@ const Profile = () => {
                 <View style={{ width: 1, backgroundColor: 'black'}} />
                 {editMode?
                     <View style={{flex: 1, flexDirection:'column', justifyContent:'space-around', alignItems:'center'}}>
-                        <Input
+                        <TextInput style={{color:componentsColors.textSecondary}}
                             onChangeText={text => handleOnchange(text, 'username')}
                             onFocus={() => handleError(null, 'username')}
                             placeholder={context.user}
+                            placeholderTextColor={ componentsColors.textSecondary}
                             error={errors.username}
                         />
-                        <Input
+                        <TextInput style={{color:componentsColors.textSecondary}}
                             onChangeText={text => handleOnchange(text, 'email')}
                             onFocus={() => handleError(null, 'email')}
                             placeholder={context.email}
+                            placeholderTextColor={ componentsColors.textSecondary}
                             error={errors.email}
                         />
-                        <Input
+                        <TextInput style={{color:componentsColors.textSecondary}}
                             onChangeText={text => handleOnchange(text, 'firstName')}
                             onFocus={() => handleError(null, 'firstName')}
                             placeholder={context.firstName}
+                            placeholderTextColor={ componentsColors.textSecondary}
                             error={errors.firstName}
                         />
-                        <Input
+                        <TextInput style={{color:componentsColors.textSecondary}}
                             onChangeText={text => handleOnchange(text, 'lastName')}
                             onFocus={() => handleError(null, 'lastName')}
                             placeholder={context.lastName}
+                            placeholderTextColor={ componentsColors.textSecondary}
                             error={errors.lastName}
                         />
-                        <Input
+                        <TextInput style={{color:componentsColors.textSecondary}}
                             onChangeText={text => handleOnchange(text, 'licencePlate')}
                             onFocus={() => handleError(null, 'licencePlate')}
                             placeholder={context.licencePlate}
+                            placeholderTextColor={ componentsColors.textSecondary}
                             error={errors.licencePlate}
                         />
 
