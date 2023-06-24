@@ -4,7 +4,21 @@ import {useState} from "react";
 import {componentsColors} from "../../constants";
 
 const RatingBar = (props) => {
+    let background = props.background? props.background : componentsColors.ratingBackgroundGray;
     const [maxStars, setMaxStars] = useState([1,2,3,4,5])
+
+    const styles = StyleSheet.create({
+        starIcon:{
+            fontSize:20,
+            color:componentsColors.starColor
+        },
+        ratingBar:{
+            backgroundColor:background,
+            flexDirection:'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }
+    });
     return(
         <View style={ styles.ratingBar}>
             {
@@ -22,15 +36,4 @@ const RatingBar = (props) => {
 }
 export default RatingBar
 
-const styles = StyleSheet.create({
-    starIcon:{
-        fontSize:20,
-        color:componentsColors.starColor
-    },
-    ratingBar:{
-        flexDirection:'row',
-        backgroundColor: componentsColors.ratingBackgroundColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-});
+
