@@ -4,7 +4,6 @@ import {componentsColors} from "../../constants";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React, {useContext, useEffect, useState} from "react";
 import {Context} from "../../../App";
-import Input from "../../components/customInput";
 import {updateUserService} from "../../services/userServices";
 
 const Profile = () => {

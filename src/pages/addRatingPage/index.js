@@ -13,7 +13,7 @@ const AddRating = ({navigation}) => {
 
     const [stars, setStars] = useState([1,2,3,4,5])
     const [ratingStars, setRatingStars] = useState(2);
-    const [rating, setRating] = useState({ licencePlate:'', description:'', stars:2, anonymous:false, img:'', username:'', userId:'' });
+    const [rating, setRating] = useState({ licencePlate:'', description:'', stars:2, anonymous:false, img:'', username:'', userId:'', likedBy:'', seenBy:'' });
     const [errors, setErrors] = React.useState({});
     const [context , setContext]= useContext(Context)
 
@@ -105,6 +105,7 @@ const AddRating = ({navigation}) => {
                     onChangeText={text => handleOnchange(text, 'licencePlate')}
                     label="Licence Plate"
                     placeholder="Enter the licence plate"
+                    placeholderTextColor={componentsColors.textPrimary}
                     onFocus={() => handleError(null, 'licencePlate')}
                     error={errors.licencePlate}
                 />
@@ -112,6 +113,7 @@ const AddRating = ({navigation}) => {
                     onChangeText={text => handleOnchange(text, 'description')}
                     label="Description"
                     placeholder="Enter a description"
+                    placeholderTextColor={componentsColors.textPrimary}
                     onFocus={() => handleError(null, 'description')}
                     error={errors.description}
                 />

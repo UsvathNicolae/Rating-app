@@ -14,10 +14,11 @@ import {Context} from "../../../App";
 
         const [like, setLike] = useState(rating.liked.includes(context.userID))
 
-        const [numberOfLikes, setNumberOfLikes] = useState(rating.liked.length/2)
+        const [numberOfLikes, setNumberOfLikes] = useState(rating.liked.split(',').length - 1)
 
         const onLikePressed = async () =>{
             setLike(!like)
+            console.log(numberOfLikes)
             await likedRatingService(rating.id, { userId: context.userID})
             if(!like){
                 setNumberOfLikes(numberOfLikes+1)
@@ -67,7 +68,13 @@ import {Context} from "../../../App";
                 <Text style={ styles.text }>Like</Text>
             </TouchableOpacity>
                 }
-            <Text style={ styles.text }>{numberOfLikes} Likes</Text>
+                {
+                    numberOfLikes===1?
+                        <Text style={ styles.text }>{numberOfLikes} Like</Text>
+                        :
+                        <Text style={ styles.text }>{numberOfLikes} Likes</Text>
+                }
+
             </View>
         </View>
     )

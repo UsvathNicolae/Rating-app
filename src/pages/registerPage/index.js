@@ -1,5 +1,5 @@
 import {Button, Keyboard, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useContext} from "react";
+import React from "react";
 import {componentsColors, ROUTES} from "../../constants";
 import Input from "../../components/customInput";
 import {registerService} from "../../services/userServices";
@@ -71,6 +71,7 @@ const Register = ({navigation}) => {
                         iconName="account"
                         label="Username"
                         placeholder="Enter your username"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.username}
                     />
                     <Input
@@ -79,6 +80,7 @@ const Register = ({navigation}) => {
                         iconName="email-outline"
                         label="Email"
                         placeholder="Enter your email address"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.email}
                     />
                     <Input
@@ -87,6 +89,7 @@ const Register = ({navigation}) => {
                         iconName="account"
                         label="First Name"
                         placeholder="Enter your first name"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.firstName}
                     />
                     <Input
@@ -95,6 +98,7 @@ const Register = ({navigation}) => {
                         iconName="account"
                         label="Last name"
                         placeholder="Enter your last name"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.lastName}
                     />
                     <Input
@@ -103,6 +107,7 @@ const Register = ({navigation}) => {
                         iconName="lock-outline"
                         label="Password"
                         placeholder="Enter your password"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.password}
                         password
                     />
@@ -112,6 +117,7 @@ const Register = ({navigation}) => {
                         iconName="lock-outline"
                         label="Confirm password"
                         placeholder="Enter your password"
+                        placeholderTextColor={componentsColors.textPrimary}
                         error={errors.confirmedPassword}
                         password
                     />

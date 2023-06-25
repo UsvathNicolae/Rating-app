@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {useState} from "react";
 import {componentsColors} from "../../constants";

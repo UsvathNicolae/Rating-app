@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Button, Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {colors, ROUTES} from "../../constants";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {Context} from "../../../App";
